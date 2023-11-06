@@ -10,36 +10,33 @@ To implement interprocess communication using pipe command.
 4. Stop
 
 ## PROGRAM:
-`
-#include<stdio.h>
-main()
+```
+#include <stdio.h>
+int main()
 {
-int p[2],pid,pid1;
-char msg[25],msg1[25];
-pipe(p);
-pid=fork();
-if(pid!=0)
+int fd[2],child; char a[10];
+printf("\n Enter the string:");
+scanf("%s",a);
+pipe(fd);
+child=fork();
+if(!child)
 {
-sleep(2);
-read(p[0],msg1,21);
-printf(“%s”,msg1);
+close(fd[0]);
+write(fd[1],a,5); wait(0);
 }
 else
 {
-pid1=fork();
-if(pid1!=0);
-{
-sleep(1);
-read(p[0],msg1,21);
-write(p[1],”Grand child says hello”,21);
+close(fd[1]);
+read(fd[0],a,5); printf("The string received from pipe is: %s",a);
 }
-else
-write(p[1],”Says hello to grandpa”,29);
+return 0;
 }
-}
-`
+```
 
 ## OUTPUT:
-
+![image](https://github.com/Madhav005/OS-EX.6-IMPLEMENTATION-OF-INTER-PROCESS-COMMUNICATION-USING-PIPE/assets/110885274/671af47e-7e2b-48b3-9df8-19852a0e74e3)
 
 ## RESULT:
+Thus, IPC using pipes mechanism is illustrated using c program successfully.
+
+
